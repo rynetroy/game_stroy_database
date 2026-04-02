@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +21,7 @@
             --neon-pink: #ff00ff;
             --neon-blue: #00d4ff;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', sans-serif;
             background: var(--dark-navy);
@@ -30,7 +29,6 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         /* Futuristic Grid Background */
         .grid-bg {
             position: fixed;
@@ -42,7 +40,6 @@
             background-size: 100% 100%, 50px 50px, 50px 50px;
             z-index: -2;
         }
-
         .grid-bg::after {
             content: '';
             position: absolute;
@@ -50,7 +47,6 @@
             background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
             z-index: -1;
         }
-
         /* Floating particles */
         .particles { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: -1; overflow: hidden; }
         .particle {
@@ -63,7 +59,6 @@
             10% { opacity: 0.6; } 90% { opacity: 0.6; }
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
-
         /* Hero Section */
         .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
         .hero::before {
@@ -73,12 +68,10 @@
             animation: pulse 10s ease-in-out infinite;
         }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
         .hero-content {
             position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 2rem;
             display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
         }
-
         .hero-text h1 {
             font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 0.5rem;
             background: linear-gradient(135deg, var(--accent) 0%, var(--neon-pink) 50%, var(--accent) 100%);
@@ -88,12 +81,10 @@
             text-shadow: 0 0 40px var(--accent-glow);
         }
         @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-
         .hero-text .subtitle {
             font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: var(--ice);
             margin-bottom: 1.5rem; letter-spacing: 3px; text-transform: uppercase;
         }
-
         .team-badge {
             display: inline-block;
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(255, 0, 255, 0.1) 100%);
@@ -101,7 +92,6 @@
             border: 1px solid var(--accent);
             box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px rgba(0, 212, 255, 0.1);
         }
-
         .hero-image {
             border-radius: 16px; overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 40px var(--accent-glow);
@@ -114,7 +104,6 @@
         }
         @keyframes shine { 0% { left: -100%; } 50%, 100% { left: 100%; } }
         .hero-image img { width: 100%; height: auto; display: block; }
-
         .scroll-hint {
             position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
             animation: bounce 2s infinite; cursor: pointer; filter: drop-shadow(0 0 10px var(--accent));
@@ -124,7 +113,6 @@
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
-
         /* Nav */
         nav {
             position: fixed; top: 0; left: 0; right: 0;
@@ -138,12 +126,10 @@
         nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s; box-shadow: 0 0 10px var(--accent); }
         nav a:hover::after { width: 100%; }
         nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
-
         /* Sections */
         section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; }
         .section-title { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--white); text-shadow: 0 0 30px var(--accent-glow); }
         .section-subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 3rem; }
-
         /* Scenario Section */
         .scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
         .scenario-image { border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 30px var(--accent-glow); border: 2px solid rgba(0, 212, 255, 0.3); }
@@ -157,7 +143,6 @@
         .feature-item:hover { transform: translateX(10px); box-shadow: 0 0 30px var(--accent-glow); }
         .feature-item h4 { color: var(--white); margin-bottom: 0.5rem; font-size: 1.1rem; }
         .feature-item p { color: var(--muted); font-size: 0.9rem; }
-
         /* ERD Section */
         .erd-container { background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(10, 14, 26, 0.9) 100%); border-radius: 16px; padding: 2rem; margin-top: 2rem; border: 1px solid rgba(0, 212, 255, 0.2); }
         .erd-image { border-radius: 12px; overflow: hidden; cursor: zoom-in; transition: all 0.3s; border: 2px solid rgba(0, 212, 255, 0.2); }
@@ -211,7 +196,6 @@
         }
         .challenge-details .challenge-item:last-child { border-bottom: none; }
         .challenge-details .challenge-item strong { color: var(--challenging); }
-
         /* Queries Section */
         .queries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
         .query-card {
@@ -232,7 +216,6 @@
         .query-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
         .query-technique { background: rgba(0, 212, 255, 0.1); padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.8rem; color: var(--accent); margin-top: 1rem; display: inline-block; border: 1px solid rgba(0, 212, 255, 0.2); }
         .query-card.challenging .query-technique { background: rgba(255, 107, 53, 0.1); color: var(--challenging); border-color: rgba(255, 107, 53, 0.3); }
-
         /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 2rem; backdrop-filter: blur(10px); }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -249,7 +232,6 @@
         .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid rgba(0, 212, 255, 0.2); display: flex; justify-content: space-between; align-items: center; }
         .technique-badge { background: rgba(0, 212, 255, 0.1); padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; color: var(--accent); border: 1px solid rgba(0, 212, 255, 0.3); }
         .technique-badge.challenging { background: rgba(255, 107, 53, 0.15); color: var(--challenging); border: 1px solid var(--challenging); }
-
         /* Team Section */
         .team-section { background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, var(--dark-navy) 100%); padding: 6rem 2rem; text-align: center; position: relative; }
         .team-image { max-width: 800px; margin: 2rem auto; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 60px var(--accent-glow); border: 2px solid rgba(0, 212, 255, 0.3); }
@@ -257,16 +239,13 @@
         .team-members { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap; }
         .team-member { background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(10, 14, 26, 0.9) 100%); padding: 1rem 2rem; border-radius: 50px; font-weight: 600; color: var(--ice); border: 1px solid rgba(0, 212, 255, 0.3); transition: all 0.3s; }
         .team-member:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--accent-glow); border-color: var(--accent); }
-
         /* Footer */
         footer { background: var(--dark-navy); padding: 3rem 2rem; text-align: center; color: var(--muted); border-top: 1px solid rgba(0, 212, 255, 0.1); }
         footer span { color: var(--accent); font-family: 'Orbitron', sans-serif; }
-
         /* Image zoom modal */
         .image-zoom-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; visibility: hidden; transition: all 0.3s; cursor: zoom-out; }
         .image-zoom-overlay.active { opacity: 1; visibility: visible; }
         .image-zoom-overlay img { max-width: 95%; max-height: 95%; object-fit: contain; }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
@@ -282,7 +261,6 @@
 <body>
     <div class="grid-bg"></div>
     <div class="particles" id="particles"></div>
-
     <nav>
         <div class="logo">DROP IF Orphan</div>
         <ul>
@@ -292,7 +270,6 @@
             <li><a href="#team">Team</a></li>
         </ul>
     </nav>
-
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
@@ -314,7 +291,6 @@
             </svg>
         </div>
     </section>
-
     <section id="scenario">
         <h2 class="section-title">Business Scenario</h2>
         <p class="section-subtitle">A tabletop gaming retail business combining product sales with table rental services</p>
@@ -330,7 +306,6 @@
             </div>
         </div>
     </section>
-
     <section id="erd">
         <h2 class="section-title">Entity Relationship Diagram</h2>
         <p class="section-subtitle">Complex database structure with 17 interconnected tables</p>
@@ -416,7 +391,6 @@
             </div>
         </div>
     </section>
-
     <section id="queries">
         <h2 class="section-title">SQL Query Challenges</h2>
         <p class="section-subtitle">Click any query to view the full SQL code</p>
@@ -436,7 +410,6 @@
             <div class="query-card challenging" onclick="openModal(13)"><span class="badge">⚡ Sebastian</span><div class="query-number">13</div><h3>Board Game Night: Table Search</h3><p>Find tables for 5 friends to play 'Betrayal at House on the Hill'</p><div class="query-technique">Nested subquery with playtime</div></div>
         </div>
     </section>
-
     <section id="team" class="team-section">
         <h2 class="section-title">Thank You</h2>
         <p class="section-subtitle">Questions?</p>
@@ -449,12 +422,10 @@
             <span class="team-member">Sebastian</span>
         </div>
     </section>
-
     <footer>
         <p><span>DROP IF Orphan</span> | Game Store Database Capstone Project | Term 2 | April 2026</p>
         <p style="margin-top: 1rem; font-size: 0.85rem;">RRC Polytechnic | COMP-1701 Transforming Data Into Databases | Alex Gilmer</p>
     </footer>
-
     <!-- Code Modal -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
@@ -469,12 +440,10 @@
             </div>
         </div>
     </div>
-
     <!-- Image Zoom Modal -->
     <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="closeImageZoom()">
         <img id="zoomedImage" src="" alt="Zoomed Image">
     </div>
-
     <script>
         // Create floating particles
         const particlesContainer = document.getElementById('particles');
@@ -486,164 +455,21 @@
             particle.style.animationDuration = (10 + Math.random() * 10) + 's';
             particlesContainer.appendChild(particle);
         }
-
         const queries = {
-            1: { title: "Query 1: Average Price - 32mm Metal Miniatures", description: "What is the average price of all miniatures that are 32mm scale and made of metal?", author: "Ronald", technique: "Double self-join on product_attributes (EAV pattern)", challenging: false, code: `SELECT AVG(p.price) AS avg_price_of_metal
-FROM
-    products p
-    JOIN product_attributes pa1 ON p.product_id = pa1.product_id
-    JOIN product_attributes pa2 ON p.product_id = pa2.product_id
-    -- att.14 = Scale(mm) & att.8 = Material 
-WHERE
-    pa1.attribute_id = 14
-    AND pa1.value_numerical = 32
-    AND pa2.attribute_id = 8
-    AND pa2.value_categorical = 'Metal';` },
-            2: { title: "Query 2: Top Board Game Customer (6 Months)", description: "Which customer has spent the most money on board games in the last 6 months?", author: "Czanel", technique: "5-table join with date filtering and aggregation", challenging: false, code: `SELECT c.customer_name, SUM(tr.item_quantity * p.price) AS total_spent
-FROM
-    customers c
-    JOIN transactions t ON c.customer_id = t.customer_id
-    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id
-    JOIN inventory i ON tr.inventory_id = i.inventory_id
-    JOIN products p ON i.product_id = p.product_id
-    JOIN categories cat ON p.category_id = cat.category_id
-WHERE
-    cat.category_name = "Board Games"
-    AND t.transaction_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-GROUP BY
-    c.customer_id,
-    c.customer_name
-ORDER BY total_spent DESC
-LIMIT 1;` },
-            3: { title: "Query 3: Tables - 6+ Seats with Built-in Screen", description: "Count the number of tables that can seat 6 or more players and have a built-in screen", author: "Ronald", technique: "Double self-join pattern for multi-feature filtering", challenging: false, code: `SELECT COUNT(DISTINCT t.table_id) AS table_count
-FROM tables t
-JOIN table_features tf1 ON t.table_id = tf1.table_id
-JOIN table_features tf2 ON t.table_id = tf2.table_id
--- feature_id 1 = seats, feature_id 3 = screen
-WHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6
-    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1;` },
-            4: { title: "Query 4: Table Availability & Cost Calculation", description: "Can I book 3 of those tables from noon to 6 pm next Tuesday, and how much would it cost?", author: "Luka", technique: "NOT IN subquery for overlap detection", challenging: false, code: `SELECT COUNT(*) AS available_tables, SUM(t.table_price_per_hour * 6) AS total_cost
-FROM tables t
-    -- join to check seating capacity
-    JOIN table_features tf1 ON t.table_id = tf1.table_id
-    -- join again to check screen feature (same table, different feature)
-    JOIN table_features tf2 ON t.table_id = tf2.table_id
-    -- feature_id 1 = seats, feature_id 3 = screen
-WHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6
-    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1
-    -- exclude tables that are already booked during the requested time
-    AND t.table_id NOT IN(SELECT tr.table_id FROM table_reservations tr
-        -- check for overlapping time with requested booking
-        WHERE '2026-04-07 12:00:00' < tr.reservation_end
-        AND '2026-04-07 18:00:00' > tr.reservation_start);` },
-            5: { title: "Query 5: Busiest Day for Table Rentals", description: "What was our busiest day for table rentals last month, measured by total number of table-hours booked?", author: "Troy", technique: "TIMESTAMPDIFF for duration calculation", challenging: false, code: `SELECT DATE(reservation_start) AS day, SUM(TIMESTAMPDIFF(HOUR, reservation_start, reservation_end)) AS total_hours
-FROM table_reservations
-WHERE reservation_start BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, "%Y-%m-01") 
-                            AND DATE_FORMAT(CURDATE(), "%Y-%m-01")
-GROUP BY day
-ORDER BY total_hours DESC
-LIMIT 1;` },
-            6: { title: "Query 6: Dice Sets - 7+ Pieces by Price", description: "Show all dice products that come in sets of 7 or more, ordered by price per die", author: "Team", technique: "Simple EAV attribute filtering", challenging: false, code: `SELECT p.product_name, p.price AS price_per_die
-FROM products p
-JOIN product_attributes pa ON p.product_id = pa.product_id
-WHERE pa.attribute_id = 9 AND pa.value_numerical >= 7
-ORDER BY price_per_die DESC;` },
-            7: { title: "Query 7: Highest Revenue Category (12 Months)", description: "Which product category generated the highest revenue in the last 12 months?", author: "Team", technique: "Multi-join revenue aggregation with date range", challenging: false, code: `SELECT cat.category_name, SUM(t.transaction_total) AS revenue
-FROM categories cat
-JOIN products p ON cat.category_id = p.category_id
-JOIN inventory i ON p.product_id = i.product_id
-JOIN transaction_records tr ON i.inventory_id = tr.inventory_id
-JOIN transactions t ON tr.transaction_id = t.transaction_id
-WHERE t.transaction_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH) AND CURDATE()
-GROUP BY cat.category_name
-ORDER BY revenue DESC
-LIMIT 1;` },
-            8: { title: "Query 8: Peak Pricing Cost Calculation", description: "Find all table reservations that overlap with peak pricing hours and calculate each of their total costs", author: "Troy", technique: "⚡ CHALLENGING: Complex time overlap calculation with GREATEST/LEAST", challenging: true, code: `SELECT r.reservation_id,SUM(
-        -- Base cost (full duration at normal price)
-        (TIMESTAMPDIFF (MINUTE, tr.reservation_start, tr.reservation_end) / 60) * t.table_price_per_hour +
-        -- Extra cost for peak-time portion
-        (GREATEST(TIMESTAMPDIFF(MINUTE,GREATEST(tr.reservation_start,
-                        CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)),
-         LEAST(tr.reservation_end,CONCAT(DATE(tr.reservation_start), ' ', pr.end_time))),0) / 60) 
-         * t.table_price_per_hour * (pr.modifier - 1)) AS total_cost
-FROM reservations r
-JOIN table_reservations tr USING (reservation_id) -- USING instead of ON (avoid repeating column names)
-JOIN tables t USING (table_id) -- Column names are the same in both tables
-JOIN pricing_rules pr ON pr.days_of_week = DAYNAME(tr.reservation_start)
--- Only reservations that overlap with peak hours
-WHERE tr.reservation_start < CONCAT(DATE(tr.reservation_start), ' ', pr.end_time)
-  AND tr.reservation_end   > CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)
-GROUP BY r.reservation_id;` },
-            9: { title: "Query 9: Rulebook Buyers Without Table Bookings", description: "List all customers who have purchased a rulebook but have never booked a table", author: "Troy", technique: "NOT IN subquery with category filter", challenging: false, code: `SELECT DISTINCT c.customer_id, c.customer_name
-FROM customers c
-    JOIN transactions t ON c.customer_id = t.customer_id
-    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id
-    JOIN inventory i ON tr.inventory_id = i.inventory_id
-    JOIN products p ON i.product_id = p.product_id
-    JOIN categories ct ON ct.category_id = p.category_id
-WHERE c.customer_id NOT IN(SELECT customer_id FROM reservations)
-    AND ct.category_name = "Rulebook";` },
-            10: { title: "Query 10: Top 3 Customers - Category Breakdown", description: "Show the top 3 customers by total spending, and each of their top 3 product categories by amount spent", author: "Sebastian", technique: "⚡ CHALLENGING: Subquery join for top spender ranking", challenging: true, code: `SELECT c.customer_id, c.customer_name, ct.category_name, SUM(p.price * tr.item_quantity) AS category_spent
-FROM customers c
-    JOIN transactions t ON t.customer_id = c.customer_id
-    JOIN transaction_records tr ON tr.transaction_id = t.transaction_id
-    JOIN inventory i ON i.inventory_id = tr.inventory_id
-    JOIN products p ON p.product_id = i.product_id
-    JOIN categories ct ON ct.category_id = p.category_id
-    JOIN (SELECT c2.customer_id, SUM(p2.price * tr2.item_quantity) AS total_spent
-          FROM customers c2
-          JOIN transactions t2 ON t2.customer_id = c2.customer_id
-          JOIN transaction_records tr2 ON tr2.transaction_id = t2.transaction_id
-          JOIN inventory i2 ON i2.inventory_id = tr2.inventory_id
-          JOIN products p2 ON p2.product_id = i2.product_id
-          JOIN categories ct2 ON ct2.category_id = p2.category_id
-          GROUP BY c2.customer_id
-          ORDER BY total_spent DESC
-          LIMIT 3) AS top_spenders ON top_spenders.customer_id = c.customer_id
-GROUP BY c.customer_id, ct.category_name
-ORDER BY c.customer_id, category_spent DESC;` },
-            11: { title: "Query 11: Unused Tables (30 Days)", description: "List all tables that had no reservations in the last 30 days", author: "Luka", technique: "NOT IN subquery for exclusion filtering", challenging: false, code: `SELECT t.table_id as table_number, t.store_id as store_number
-FROM tables t
-WHERE t.table_id NOT IN(SELECT tr.table_id
-        FROM table_reservations tr
-        WHERE tr.reservation_start >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE());` },
-            12: { title: "Query 12: Category Product Counts", description: "Which category (or combination of categories) appears most often? Show all of them, ordered by number of products", author: "Czanel", technique: "Simple GROUP BY with COUNT aggregation", challenging: false, code: `SELECT c.category_name, COUNT(p.product_id) AS number_of_products
-FROM categories c
-JOIN products p ON c.category_id = p.category_id
-GROUP BY c.category_name
-ORDER BY number_of_products DESC;` },
-            13: { title: "Query 13: Board Game Night - Table Search", description: "Find tables for 5 friends to play 'Betrayal at House on the Hill' tomorrow with drink holders", author: "Sebastian", technique: "⚡ CHALLENGING: View creation + nested subquery with playtime", challenging: true, code: `-- Check whether we have the game in stock
-SELECT p.product_name, COUNT(*)
-FROM inventory i
-JOIN products p on p.product_id = i.product_id
-WHERE p.product_name = "Betrayal at House on the Hill" AND i.store_id = 1
- 
--- create view for easy access to table information
-CREATE OR REPLACE VIEW open_tables AS
-SELECT t.store_id, t.table_id, t.table_price_per_hour,
-    -- transpose feature_name and value_numerical into columns for each feature_name
-    MAX(CASE WHEN f.feature_name = "Capacity" THEN tf.value_numerical END) AS Capacity,
-    MAX(CASE WHEN f.feature_name = "Cupholder" THEN tf.value_numerical END) AS Cupholders,
-    MAX(CASE WHEN f.feature_name = "Number of Screens" THEN tf.value_numerical END) AS `Num Screens`
-FROM tables t
-    LEFT JOIN table_features tf ON tf.table_id = t.table_id
-    LEFT JOIN features f ON f.feature_id = tf.feature_id
-GROUP BY t.table_id;
- 
-SELECT table_id, `Capacity`, store_id
-FROM open_tables
-WHERE `Capacity` >= 5 AND `Cupholders` > 0 AND store_id = 1
-        -- Disclude tables that are booked at that starting time to the end of the game time
-    AND table_id NOT IN(SELECT tr.table_id
-        FROM table_reservations tr
-        WHERE '2026-04-01 14:00:00' < tr.reservation_end
-            AND DATE_ADD( '2026-04-01 14:00:00', INTERVAL( SELECT pa.value_numerical FROM products p
-                JOIN product_attributes pa ON p.product_id = pa.product_id
-                JOIN attributes a ON pa.attribute_id = a.attribute_id
-                WHERE p.product_name = 'Betrayal at House on the Hill'
-                AND a.attribute_name = 'Average Playtime (Min)') MINUTE) > tr.reservation_start);` }
+            1: { title: "Query 1: Average Price - 32mm Metal Miniatures", description: "What is the average price of all miniatures that are 32mm scale and made of metal?", author: "Ronald", technique: "Double self-join on product_attributes (EAV pattern)", challenging: false, code: "SELECT AVG(p.price) AS avg_price_of_metal\nFROM\n    products p\n    JOIN product_attributes pa1 ON p.product_id = pa1.product_id\n    JOIN product_attributes pa2 ON p.product_id = pa2.product_id\n    -- att.14 = Scale(mm) & att.8 = Material \nWHERE\n    pa1.attribute_id = 14\n    AND pa1.value_numerical = 32\n    AND pa2.attribute_id = 8\n    AND pa2.value_categorical = 'Metal';" },
+            2: { title: "Query 2: Top Board Game Customer (6 Months)", description: "Which customer has spent the most money on board games in the last 6 months?", author: "Czanel", technique: "5-table join with date filtering and aggregation", challenging: false, code: "SELECT c.customer_name, SUM(tr.item_quantity * p.price) AS total_spent\nFROM\n    customers c\n    JOIN transactions t ON c.customer_id = t.customer_id\n    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id\n    JOIN inventory i ON tr.inventory_id = i.inventory_id\n    JOIN products p ON i.product_id = p.product_id\n    JOIN categories cat ON p.category_id = cat.category_id\nWHERE\n    cat.category_name = \"Board Games\"\n    AND t.transaction_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)\nGROUP BY\n    c.customer_id,\n    c.customer_name\nORDER BY total_spent DESC\nLIMIT 1;" },
+            3: { title: "Query 3: Tables - 6+ Seats with Built-in Screen", description: "Count the number of tables that can seat 6 or more players and have a built-in screen", author: "Ronald", technique: "Double self-join pattern for multi-feature filtering", challenging: false, code: "SELECT COUNT(DISTINCT t.table_id) AS table_count\nFROM tables t\nJOIN table_features tf1 ON t.table_id = tf1.table_id\nJOIN table_features tf2 ON t.table_id = tf2.table_id\n-- feature_id 1 = seats, feature_id 3 = screen\nWHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6\n    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1;" },
+            4: { title: "Query 4: Table Availability & Cost Calculation", description: "Can I book 3 of those tables from noon to 6 pm next Tuesday, and how much would it cost?", author: "Luka", technique: "NOT IN subquery for overlap detection", challenging: false, code: "SELECT COUNT(*) AS available_tables, SUM(t.table_price_per_hour * 6) AS total_cost\nFROM tables t\n    -- join to check seating capacity\n    JOIN table_features tf1 ON t.table_id = tf1.table_id\n    -- join again to check screen feature (same table, different feature)\n    JOIN table_features tf2 ON t.table_id = tf2.table_id\n    -- feature_id 1 = seats, feature_id 3 = screen\nWHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6\n    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1\n    -- exclude tables that are already booked during the requested time\n    AND t.table_id NOT IN(SELECT tr.table_id FROM table_reservations tr\n        -- check for overlapping time with requested booking\n        WHERE '2026-04-07 12:00:00' < tr.reservation_end\n        AND '2026-04-07 18:00:00' > tr.reservation_start);" },
+            5: { title: "Query 5: Busiest Day for Table Rentals", description: "What was our busiest day for table rentals last month, measured by total number of table-hours booked?", author: "Troy", technique: "TIMESTAMPDIFF for duration calculation", challenging: false, code: "SELECT DATE(reservation_start) AS day, SUM(TIMESTAMPDIFF(HOUR, reservation_start, reservation_end)) AS total_hours\nFROM table_reservations\nWHERE reservation_start BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, \"%Y-%m-01\") \n                            AND DATE_FORMAT(CURDATE(), \"%Y-%m-01\")\nGROUP BY day\nORDER BY total_hours DESC\nLIMIT 1;" },
+            6: { title: "Query 6: Dice Sets - 7+ Pieces by Price", description: "Show all dice products that come in sets of 7 or more, ordered by price per die", author: "Luka", technique: "Simple EAV attribute filtering", challenging: false, code: "SELECT p.product_name, p.price AS price_per_die\nFROM products p\nJOIN product_attributes pa ON p.product_id = pa.product_id\nWHERE pa.attribute_id = 9 AND pa.value_numerical >= 7\nORDER BY price_per_die DESC;" },
+            7: { title: "Query 7: Highest Revenue Category (12 Months)", description: "Which product category generated the highest revenue in the last 12 months?", author: "Sebastian", technique: "Multi-join revenue aggregation with date range", challenging: false, code: "SELECT cat.category_name, SUM(t.transaction_total) AS revenue\nFROM categories cat\nJOIN products p ON cat.category_id = p.category_id\nJOIN inventory i ON p.product_id = i.product_id\nJOIN transaction_records tr ON i.inventory_id = tr.inventory_id\nJOIN transactions t ON tr.transaction_id = t.transaction_id\nWHERE t.transaction_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH) AND CURDATE()\nGROUP BY cat.category_name\nORDER BY revenue DESC\nLIMIT 1;" },
+            8: { title: "Query 8: Peak Pricing Cost Calculation", description: "Find all table reservations that overlap with peak pricing hours and calculate each of their total costs", author: "Troy", technique: "⚡ CHALLENGING: Complex time overlap calculation with GREATEST/LEAST", challenging: true, code: "SELECT r.reservation_id,SUM(\n        -- Base cost (full duration at normal price)\n        (TIMESTAMPDIFF (MINUTE, tr.reservation_start, tr.reservation_end) / 60) * t.table_price_per_hour +\n        -- Extra cost for peak-time portion\n        (GREATEST(TIMESTAMPDIFF(MINUTE,GREATEST(tr.reservation_start,\n                        CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)),\n         LEAST(tr.reservation_end,CONCAT(DATE(tr.reservation_start), ' ', pr.end_time))),0) / 60) \n         * t.table_price_per_hour * (pr.modifier - 1)) AS total_cost\nFROM reservations r\nJOIN table_reservations tr USING (reservation_id) -- USING instead of ON (avoid repeating column names)\nJOIN tables t USING (table_id) -- Column names are the same in both tables\nJOIN pricing_rules pr ON pr.days_of_week = DAYNAME(tr.reservation_start)\n-- Only reservations that overlap with peak hours\nWHERE tr.reservation_start < CONCAT(DATE(tr.reservation_start), ' ', pr.end_time)\n  AND tr.reservation_end   > CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)\nGROUP BY r.reservation_id;" },
+            9: { title: "Query 9: Rulebook Buyers Without Table Bookings", description: "List all customers who have purchased a rulebook but have never booked a table", author: "Ronald", technique: "NOT IN subquery with category filter", challenging: false, code: "SELECT DISTINCT c.customer_id, c.customer_name\nFROM customers c\n    JOIN transactions t ON c.customer_id = t.customer_id\n    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id\n    JOIN inventory i ON tr.inventory_id = i.inventory_id\n    JOIN products p ON i.product_id = p.product_id\n    JOIN categories ct ON ct.category_id = p.category_id\nWHERE c.customer_id NOT IN(SELECT customer_id FROM reservations)\n    AND ct.category_name = \"Rulebook\";" },
+            10: { title: "Query 10: Top 3 Customers - Category Breakdown", description: "Show the top 3 customers by total spending, and each of their top 3 product categories by amount spent", author: "Sebastian", technique: "⚡ CHALLENGING: Subquery join for top spender ranking", challenging: true, code: "SELECT c.customer_id, c.customer_name, ct.category_name, SUM(p.price * tr.item_quantity) AS category_spent\nFROM customers c\n    JOIN transactions t ON t.customer_id = c.customer_id\n    JOIN transaction_records tr ON tr.transaction_id = t.transaction_id\n    JOIN inventory i ON i.inventory_id = tr.inventory_id\n    JOIN products p ON p.product_id = i.product_id\n    JOIN categories ct ON ct.category_id = p.category_id\n    JOIN (SELECT c2.customer_id, SUM(p2.price * tr2.item_quantity) AS total_spent\n          FROM customers c2\n          JOIN transactions t2 ON t2.customer_id = c2.customer_id\n          JOIN transaction_records tr2 ON tr2.transaction_id = t2.transaction_id\n          JOIN inventory i2 ON i2.inventory_id = tr2.inventory_id\n          JOIN products p2 ON p2.product_id = i2.product_id\n          JOIN categories ct2 ON ct2.category_id = p2.category_id\n          GROUP BY c2.customer_id\n          ORDER BY total_spent DESC\n          LIMIT 3) AS top_spenders ON top_spenders.customer_id = c.customer_id\nGROUP BY c.customer_id, ct.category_name\nORDER BY c.customer_id, category_spent DESC;" },
+            11: { title: "Query 11: Unused Tables (30 Days)", description: "List all tables that had no reservations in the last 30 days", author: "Luka", technique: "NOT IN subquery for exclusion filtering", challenging: false, code: "SELECT t.table_id as table_number, t.store_id as store_number\nFROM tables t\nWHERE t.table_id NOT IN(SELECT tr.table_id\n        FROM table_reservations tr\n        WHERE tr.reservation_start >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE());" },
+            12: { title: "Query 12: Category Product Counts", description: "Which category (or combination of categories) appears most often? Show all of them, ordered by number of products", author: "Czanel", technique: "Simple GROUP BY with COUNT aggregation", challenging: false, code: "SELECT c.category_name, COUNT(p.product_id) AS number_of_products\nFROM categories c\nJOIN products p ON c.category_id = p.category_id\nGROUP BY c.category_name\nORDER BY number_of_products DESC;" },
+            13: { title: "Query 13: Board Game Night - Table Search", description: "Find tables for 5 friends to play 'Betrayal at House on the Hill' tomorrow with drink holders", author: "Sebastian", technique: "⚡ CHALLENGING: View creation + nested subquery with playtime", challenging: true, code: "-- Check whether we have the game in stock\nSELECT p.product_name, COUNT(*)\nFROM inventory i\nJOIN products p on p.product_id = i.product_id\nWHERE p.product_name = \"Betrayal at House on the Hill\" AND i.store_id = 1\n \n-- create view for easy access to table information\nCREATE OR REPLACE VIEW open_tables AS\nSELECT t.store_id, t.table_id, t.table_price_per_hour,\n    -- transpose feature_name and value_numerical into columns for each feature_name\n    MAX(CASE WHEN f.feature_name = \"Capacity\" THEN tf.value_numerical END) AS Capacity,\n    MAX(CASE WHEN f.feature_name = \"Cupholder\" THEN tf.value_numerical END) AS Cupholders,\n    MAX(CASE WHEN f.feature_name = \"Number of Screens\" THEN tf.value_numerical END) AS NumScreens\nFROM tables t\n    LEFT JOIN table_features tf ON tf.table_id = t.table_id\n    LEFT JOIN features f ON f.feature_id = tf.feature_id\nGROUP BY t.table_id;\n \nSELECT table_id, Capacity, store_id\nFROM open_tables\nWHERE Capacity >= 5 AND Cupholders > 0 AND store_id = 1\n        -- Disclude tables that are booked at that starting time to the end of the game time\n    AND table_id NOT IN(SELECT tr.table_id\n        FROM table_reservations tr\n        WHERE '2026-04-01 14:00:00' < tr.reservation_end\n            AND DATE_ADD( '2026-04-01 14:00:00', INTERVAL( SELECT pa.value_numerical FROM products p\n                JOIN product_attributes pa ON p.product_id = pa.product_id\n                JOIN attributes a ON pa.attribute_id = a.attribute_id\n                WHERE p.product_name = 'Betrayal at House on the Hill'\n                AND a.attribute_name = 'Average Playtime (Min)') MINUTE) > tr.reservation_start);" }
         };
-
         function openModal(queryNum) {
             const query = queries[queryNum];
             document.getElementById('modalTitle').textContent = query.title;
@@ -656,24 +482,20 @@ WHERE `Capacity` >= 5 AND `Cupholders` > 0 AND store_id = 1
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal(event) {
             if (event && event.target !== event.currentTarget) return;
             document.getElementById('modalOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
-
         function openImageZoom(src) {
             document.getElementById('zoomedImage').src = src;
             document.getElementById('imageZoomOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeImageZoom() {
             document.getElementById('imageZoomOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { closeModal(); closeImageZoom(); }
         });
