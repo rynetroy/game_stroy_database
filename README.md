@@ -196,7 +196,7 @@ You can view the project interface here:
 
 👉 Open `index.html`  
 or  
-https://rynetroy.github.io/game_stroy_database/
+https://rynetroy.github.io/game_store_database
 
 ---
 
