@@ -319,8 +319,8 @@
             <div class="query-card" onclick="openModal(6)"><span class="badge">Team</span><div class="query-number">6</div><h3>Dice Sets: 7+ Pieces</h3><p>Show all dice products with 7+ pieces, ordered by price</p><div class="query-technique">Simple EAV filtering</div></div>
             <div class="query-card" onclick="openModal(7)"><span class="badge">Team</span><div class="query-number">7</div><h3>Highest Revenue Category</h3><p>Which product category generated the most revenue this year?</p><div class="query-technique">Multi-join aggregation</div></div>
             <div class="query-card challenging" onclick="openModal(8)"><span class="badge">⚡ Troy</span><div class="query-number">8</div><h3>Peak Pricing Calculation</h3><p>Calculate total costs for reservations overlapping peak hours</p><div class="query-technique">GREATEST/LEAST overlap</div></div>
-            <div class="query-card" onclick="openModal(9)"><span class="badge">Troy</span><div class="query-number">9</div><h3>Rulebook Buyers (No Tables)</h3><p>Find customers who bought rulebooks but never booked a table</p><div class="query-technique">LIKE pattern matching</div></div>
-            <div class="query-card challenging" onclick="openModal(10)"><span class="badge">⚡ Luka</span><div class="query-number">10</div><h3>Top 3 Customers Breakdown</h3><p>Show top 3 customers with their top 3 categories each</p><div class="query-technique">UNION ALL nested subqueries</div></div>
+            <div class="query-card" onclick="openModal(9)"><span class="badge">Troy</span><div class="query-number">9</div><h3>Rulebook Buyers (No Tables)</h3><p>Find customers who bought rulebooks but never booked a table</p><div class="query-technique">NOT IN + Category filter</div></div>
+            <div class="query-card challenging" onclick="openModal(10)"><span class="badge">⚡ Sebastian</span><div class="query-number">10</div><h3>Top 3 Customers Breakdown</h3><p>Show top 3 customers with their top 3 categories each</p><div class="query-technique">Subquery join ranking</div></div>
             <div class="query-card" onclick="openModal(11)"><span class="badge">Luka</span><div class="query-number">11</div><h3>Unused Tables (30 Days)</h3><p>List all tables with no reservations in the last 30 days</p><div class="query-technique">NOT IN exclusion filtering</div></div>
             <div class="query-card" onclick="openModal(12)"><span class="badge">Czanel</span><div class="query-number">12</div><h3>Category Product Counts</h3><p>Show all categories ordered by number of products</p><div class="query-technique">GROUP BY with COUNT</div></div>
             <div class="query-card challenging" onclick="openModal(13)"><span class="badge">⚡ Sebastian</span><div class="query-number">13</div><h3>Board Game Night: Table Search</h3><p>Find tables for 5 friends to play 'Betrayal at House on the Hill'</p><div class="query-technique">Nested subquery with playtime</div></div>
@@ -340,7 +340,10 @@
         </div>
     </section>
 
-    <footer><p><span>DROP IF Orphan</span> | Game Store Database | Capstone Project | April 2026</p></footer>
+    <footer>
+        <p><span>DROP IF Orphan</span> | Game Store Database | Capstone Project | April 2026</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">COMP-1701 (277852) Transforming Data Into Databases | Alex Gilmer</p>
+    </footer>
 
     <!-- Code Modal -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
@@ -375,19 +378,160 @@
         }
 
         const queries = {
-            1: { title: "Query 1: Average Price - 32mm Metal Miniatures", description: "Find the average price of miniatures with 32mm scale AND metal material", author: "Ronald", technique: "Double self-join on product_attributes (EAV pattern)", challenging: false, code: `SELECT AVG(p.price) AS avg_price_of_metal\nFROM products p\n    JOIN product_attributes pa1\n      ON p.product_id = pa1.product_id\n    JOIN product_attributes pa2\n      ON p.product_id = pa2.product_id\nWHERE pa1.attribute_id = 14\n  AND pa1.value_numerical = 32\n  AND pa2.attribute_id = 8\n  AND pa2.value_categorical = 'Metal';` },
-            2: { title: "Query 2: Top Board Game Customer (6 Months)", description: "Find the customer who spent the most on board games in the last 6 months", author: "Czanel", technique: "5-table join with date filtering and aggregation", challenging: false, code: `SELECT c.customer_name,\n       SUM(tr.item_quantity * p.price) AS total_spent\nFROM customers c\n    JOIN transactions t ON c.customer_id = t.customer_id\n    JOIN transaction_records tr\n      ON t.transaction_id = tr.transaction_id\n    JOIN inventory i ON tr.inventory_id = i.inventory_id\n    JOIN products p ON i.product_id = p.product_id\n    JOIN categories cat ON p.category_id = cat.category_id\nWHERE cat.category_name = "Board Games"\n    AND t.transaction_date >= DATE_SUB(CURDATE(),\n        INTERVAL 6 MONTH)\nGROUP BY c.customer_id, c.customer_name\nORDER BY total_spent DESC LIMIT 1;` },
-            3: { title: "Query 3: Tables - 6+ Seats with Built-in Screen", description: "Count tables that can seat 6+ players AND have a built-in screen", author: "Ronald", technique: "Double self-join pattern for multi-feature filtering", challenging: false, code: `SELECT COUNT(DISTINCT t.table_id) AS table_count\nFROM tables t\n    JOIN table_features tf1 ON t.table_id = tf1.table_id\n    JOIN table_features tf2 ON t.table_id = tf2.table_id\nWHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6\n    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1;` },
-            4: { title: "Query 4: Table Availability & Cost Calculation", description: "Check if 3 tables (6+ seats, screen) are available next Tuesday 12-6pm", author: "Luka", technique: "NOT IN subquery for overlap detection", challenging: false, code: `SELECT COUNT(*) AS available_tables,\n       SUM(t.table_price_per_hour * 6) AS total_cost\nFROM tables t\n    JOIN table_features tf1 ON t.table_id = tf1.table_id\n    JOIN table_features tf2 ON t.table_id = tf2.table_id\nWHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6\n    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1\n    AND t.table_id NOT IN (\n        SELECT tr.table_id FROM table_reservations tr\n        WHERE '2026-04-07 12:00:00' < tr.reservation_end\n          AND '2026-04-07 18:00:00' > tr.reservation_start\n    );` },
-            5: { title: "Query 5: Busiest Day for Table Rentals", description: "Find the busiest day last month by total table-hours booked", author: "Troy", technique: "TIMESTAMPDIFF for duration calculation", challenging: false, code: `SELECT DATE(reservation_start) AS day,\n       SUM(TIMESTAMPDIFF(HOUR,\n           reservation_start, reservation_end)) AS total_hours\nFROM table_reservations\nWHERE reservation_start\n    BETWEEN '2026-03-01' AND '2026-03-31'\nGROUP BY day\nORDER BY total_hours DESC LIMIT 1;` },
-            6: { title: "Query 6: Dice Sets - 7+ Pieces by Price", description: "Show all dice products with 7+ pieces, ordered by price per die", author: "Team", technique: "Simple EAV attribute filtering", challenging: false, code: `SELECT p.product_name, p.price AS price_per_die\nFROM products p\n    JOIN product_attributes pa\n      ON p.product_id = pa.product_id\nWHERE pa.attribute_id = 9\n  AND pa.value_numerical >= 7\nORDER BY price_per_die DESC;` },
-            7: { title: "Query 7: Highest Revenue Category (12 Months)", description: "Which product category generated the most revenue this year?", author: "Team", technique: "Multi-join revenue aggregation with date range", challenging: false, code: `SELECT cat.category_name,\n       SUM(t.transaction_total) AS revenue\nFROM categories cat\n    JOIN products p ON cat.category_id = p.category_id\n    JOIN inventory i ON p.product_id = i.product_id\n    JOIN transaction_records tr\n      ON i.inventory_id = tr.inventory_id\n    JOIN transactions t\n      ON tr.transaction_id = t.transaction_id\nWHERE t.transaction_date\n    BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH)\n        AND CURDATE()\nGROUP BY cat.category_name\nORDER BY revenue DESC LIMIT 1;` },
-            8: { title: "Query 8: Peak Pricing Cost Calculation", description: "Calculate total costs for reservations overlapping peak hours", author: "Troy", technique: "⚡ CHALLENGING: Complex time overlap calculation with GREATEST/LEAST", challenging: true, code: `SELECT r.reservation_id,\n  SUM(\n    (TIMESTAMPDIFF(MINUTE, tr.reservation_start,\n        tr.reservation_end) / 60) * t.table_price_per_hour\n    + (GREATEST(TIMESTAMPDIFF(MINUTE,\n        GREATEST(tr.reservation_start,\n            CONCAT(DATE(tr.reservation_start),' ',pr.start_time)),\n        LEAST(tr.reservation_end,\n            CONCAT(DATE(tr.reservation_start),' ',pr.end_time))\n      ), 0) / 60) * t.table_price_per_hour * (pr.modifier - 1)\n  ) AS total_cost\nFROM reservations r\n  JOIN table_reservations tr ON r.reservation_id = tr.reservation_id\n  JOIN tables t ON tr.table_id = t.table_id\n  JOIN pricing_rules pr ON pr.days_of_week = DAYNAME(tr.reservation_start)\nWHERE tr.reservation_start < CONCAT(DATE(tr.reservation_start),' ',pr.end_time)\n  AND tr.reservation_end > CONCAT(DATE(tr.reservation_start),' ',pr.start_time)\nGROUP BY r.reservation_id;` },
-            9: { title: "Query 9: Rulebook Buyers Without Table Bookings", description: "Find customers who bought rulebooks but never booked a table", author: "Troy", technique: "LIKE pattern matching with DISTINCT", challenging: false, code: `SELECT DISTINCT c.customer_id, c.customer_name\nFROM customers c\n    JOIN transactions t ON c.customer_id = t.customer_id\n    JOIN transaction_records tr\n      ON t.transaction_id = tr.transaction_id\n    JOIN inventory i ON tr.inventory_id = i.inventory_id\n    JOIN products p ON i.product_id = p.product_id\nWHERE p.product_name LIKE '%Handbook%';` },
-            10: { title: "Query 10: Top 3 Customers - Category Breakdown", description: "Show top 3 customers by spending with their top 3 categories each", author: "Luka", technique: "⚡ CHALLENGING: UNION ALL with nested subqueries for ranking", challenging: true, code: `-- Uses UNION ALL of 3 subqueries\n-- Each finds a top customer's top 3 categories\n\n(SELECT c.customer_id, c.customer_name,\n        cat.category_name,\n        SUM(p.price * tr.item_quantity) AS category_spent\n FROM customers c\n   JOIN transactions t ON c.customer_id = t.customer_id\n   JOIN transaction_records tr ON t.transaction_id = tr.transaction_id\n   JOIN inventory i ON tr.inventory_id = i.inventory_id\n   JOIN products p ON i.product_id = p.product_id\n   JOIN categories cat ON p.category_id = cat.category_id\n WHERE c.customer_id = (\n   SELECT t2.customer_id FROM transactions t2\n   GROUP BY t2.customer_id\n   ORDER BY SUM(t2.transaction_total) DESC LIMIT 1)\n GROUP BY c.customer_id, cat.category_name\n ORDER BY category_spent DESC LIMIT 3)\n\nUNION ALL ... (repeat for 2nd and 3rd customer)` },
-            11: { title: "Query 11: Unused Tables (30 Days)", description: "List all tables with no reservations in the last 30 days", author: "Luka", technique: "NOT IN subquery for exclusion filtering", challenging: false, code: `SELECT t.table_id as table_number,\n       t.store_id as store_number\nFROM tables t\nWHERE t.table_id NOT IN (\n    SELECT tr.table_id\n    FROM table_reservations tr\n    WHERE tr.reservation_start >=\n        DATE_SUB(CURDATE(), INTERVAL 1 MONTH)\n        AND CURDATE()\n);` },
-            12: { title: "Query 12: Category Product Counts", description: "Show all categories ordered by number of products", author: "Czanel", technique: "Simple GROUP BY with COUNT aggregation", challenging: false, code: `SELECT c.category_name,\n       COUNT(p.product_id) AS number_of_products\nFROM categories c\n    JOIN products p\n      ON c.category_id = p.category_id\nGROUP BY c.category_name\nORDER BY number_of_products DESC;` },
-            13: { title: "Query 13: Board Game Night - Table Search", description: "Find tables for 5 friends to play 'Betrayal at House on the Hill' tomorrow", author: "Sebastian", technique: "⚡ CHALLENGING: Nested subquery uses product playtime for availability check", challenging: true, code: `SELECT t.table_id, f1.feature_name, tf1.value_numerical\nFROM tables t\n  JOIN table_features tf1 ON t.table_id = tf1.table_id\n  JOIN features f1 ON tf1.feature_id = f1.feature_id\n  JOIN table_features tf2 ON t.table_id = tf2.table_id\n  JOIN features f2 ON tf2.feature_id = f2.feature_id\nWHERE f1.feature_name = 'Capacity' AND tf1.value_numerical >= 5\n  AND f2.feature_name = 'Cupholder' AND tf2.value_numerical > 0\n  AND t.table_id NOT IN (\n    SELECT tr.table_id FROM table_reservations tr\n    WHERE '2026-04-01 14:00:00' < tr.reservation_end\n      AND DATE_ADD('2026-04-01 14:00:00', INTERVAL (\n        SELECT pa.value_numerical FROM products p\n          JOIN product_attributes pa ON p.product_id = pa.product_id\n          JOIN attributes a ON pa.attribute_id = a.attribute_id\n        WHERE p.product_name = 'Betrayal at House on the Hill'\n          AND a.attribute_name = 'Average Playtime (Min)'\n      ) MINUTE) > tr.reservation_start);` }
+            1: { title: "Query 1: Average Price - 32mm Metal Miniatures", description: "What is the average price of all miniatures that are 32mm scale and made of metal?", author: "Ronald", technique: "Double self-join on product_attributes (EAV pattern)", challenging: false, code: `SELECT AVG(p.price) AS avg_price_of_metal
+FROM
+    products p
+    JOIN product_attributes pa1 ON p.product_id = pa1.product_id
+    JOIN product_attributes pa2 ON p.product_id = pa2.product_id
+    -- att.14 = Scale(mm) & att.8 = Material 
+WHERE
+    pa1.attribute_id = 14
+    AND pa1.value_numerical = 32
+    AND pa2.attribute_id = 8
+    AND pa2.value_categorical = 'Metal';` },
+            2: { title: "Query 2: Top Board Game Customer (6 Months)", description: "Which customer has spent the most money on board games in the last 6 months?", author: "Czanel", technique: "5-table join with date filtering and aggregation", challenging: false, code: `SELECT c.customer_name, SUM(tr.item_quantity * p.price) AS total_spent
+FROM
+    customers c
+    JOIN transactions t ON c.customer_id = t.customer_id
+    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id
+    JOIN inventory i ON tr.inventory_id = i.inventory_id
+    JOIN products p ON i.product_id = p.product_id
+    JOIN categories cat ON p.category_id = cat.category_id
+WHERE
+    cat.category_name = "Board Games"
+    AND t.transaction_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY
+    c.customer_id,
+    c.customer_name
+ORDER BY total_spent DESC
+LIMIT 1;` },
+            3: { title: "Query 3: Tables - 6+ Seats with Built-in Screen", description: "Count the number of tables that can seat 6 or more players and have a built-in screen", author: "Ronald", technique: "Double self-join pattern for multi-feature filtering", challenging: false, code: `SELECT COUNT(DISTINCT t.table_id) AS table_count
+FROM tables t
+JOIN table_features tf1 ON t.table_id = tf1.table_id
+JOIN table_features tf2 ON t.table_id = tf2.table_id
+-- feature_id 1 = seats, feature_id 3 = screen
+WHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6
+    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1;` },
+            4: { title: "Query 4: Table Availability & Cost Calculation", description: "Can I book 3 of those tables from noon to 6 pm next Tuesday, and how much would it cost?", author: "Luka", technique: "NOT IN subquery for overlap detection", challenging: false, code: `SELECT COUNT(*) AS available_tables, SUM(t.table_price_per_hour * 6) AS total_cost
+FROM tables t
+    -- join to check seating capacity
+    JOIN table_features tf1 ON t.table_id = tf1.table_id
+    -- join again to check screen feature (same table, different feature)
+    JOIN table_features tf2 ON t.table_id = tf2.table_id
+    -- feature_id 1 = seats, feature_id 3 = screen
+WHERE tf1.feature_id = 1 AND tf1.value_numerical >= 6
+    AND tf2.feature_id = 3 AND tf2.value_numerical >= 1
+    -- exclude tables that are already booked during the requested time
+    AND t.table_id NOT IN(SELECT tr.table_id FROM table_reservations tr
+        -- check for overlapping time with requested booking
+        WHERE '2026-04-07 12:00:00' < tr.reservation_end
+        AND '2026-04-07 18:00:00' > tr.reservation_start);` },
+            5: { title: "Query 5: Busiest Day for Table Rentals", description: "What was our busiest day for table rentals last month, measured by total number of table-hours booked?", author: "Troy", technique: "TIMESTAMPDIFF for duration calculation", challenging: false, code: `SELECT DATE(reservation_start) AS day, SUM(TIMESTAMPDIFF(HOUR, reservation_start, reservation_end)) AS total_hours
+FROM table_reservations
+WHERE reservation_start BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, "%Y-%m-01") 
+                            AND DATE_FORMAT(CURDATE(), "%Y-%m-01")
+GROUP BY day
+ORDER BY total_hours DESC
+LIMIT 1;` },
+            6: { title: "Query 6: Dice Sets - 7+ Pieces by Price", description: "Show all dice products that come in sets of 7 or more, ordered by price per die", author: "Team", technique: "Simple EAV attribute filtering", challenging: false, code: `SELECT p.product_name, p.price AS price_per_die
+FROM products p
+JOIN product_attributes pa ON p.product_id = pa.product_id
+WHERE pa.attribute_id = 9 AND pa.value_numerical >= 7
+ORDER BY price_per_die DESC;` },
+            7: { title: "Query 7: Highest Revenue Category (12 Months)", description: "Which product category generated the highest revenue in the last 12 months?", author: "Team", technique: "Multi-join revenue aggregation with date range", challenging: false, code: `SELECT cat.category_name, SUM(t.transaction_total) AS revenue
+FROM categories cat
+JOIN products p ON cat.category_id = p.category_id
+JOIN inventory i ON p.product_id = i.product_id
+JOIN transaction_records tr ON i.inventory_id = tr.inventory_id
+JOIN transactions t ON tr.transaction_id = t.transaction_id
+WHERE t.transaction_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH) AND CURDATE()
+GROUP BY cat.category_name
+ORDER BY revenue DESC
+LIMIT 1;` },
+            8: { title: "Query 8: Peak Pricing Cost Calculation", description: "Find all table reservations that overlap with peak pricing hours and calculate each of their total costs", author: "Troy", technique: "⚡ CHALLENGING: Complex time overlap calculation with GREATEST/LEAST", challenging: true, code: `SELECT r.reservation_id,SUM(
+        -- Base cost (full duration at normal price)
+        (TIMESTAMPDIFF (MINUTE, tr.reservation_start, tr.reservation_end) / 60) * t.table_price_per_hour +
+        -- Extra cost for peak-time portion
+        (GREATEST(TIMESTAMPDIFF(MINUTE,GREATEST(tr.reservation_start,
+                        CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)),
+         LEAST(tr.reservation_end,CONCAT(DATE(tr.reservation_start), ' ', pr.end_time))),0) / 60) 
+         * t.table_price_per_hour * (pr.modifier - 1)) AS total_cost
+FROM reservations r
+JOIN table_reservations tr USING (reservation_id) -- USING instead of ON (avoid repeating column names)
+JOIN tables t USING (table_id) -- Column names are the same in both tables
+JOIN pricing_rules pr ON pr.days_of_week = DAYNAME(tr.reservation_start)
+-- Only reservations that overlap with peak hours
+WHERE tr.reservation_start < CONCAT(DATE(tr.reservation_start), ' ', pr.end_time)
+  AND tr.reservation_end   > CONCAT(DATE(tr.reservation_start), ' ', pr.start_time)
+GROUP BY r.reservation_id;` },
+            9: { title: "Query 9: Rulebook Buyers Without Table Bookings", description: "List all customers who have purchased a rulebook but have never booked a table", author: "Troy", technique: "NOT IN subquery with category filter", challenging: false, code: `SELECT DISTINCT c.customer_id, c.customer_name
+FROM customers c
+    JOIN transactions t ON c.customer_id = t.customer_id
+    JOIN transaction_records tr ON t.transaction_id = tr.transaction_id
+    JOIN inventory i ON tr.inventory_id = i.inventory_id
+    JOIN products p ON i.product_id = p.product_id
+    JOIN categories ct ON ct.category_id = p.category_id
+WHERE c.customer_id NOT IN(SELECT customer_id FROM reservations)
+    AND ct.category_name = "Rulebook";` },
+            10: { title: "Query 10: Top 3 Customers - Category Breakdown", description: "Show the top 3 customers by total spending, and each of their top 3 product categories by amount spent", author: "Sebastian", technique: "⚡ CHALLENGING: Subquery join for top spender ranking", challenging: true, code: `SELECT c.customer_id, c.customer_name, ct.category_name, SUM(p.price * tr.item_quantity) AS category_spent
+FROM customers c
+    JOIN transactions t ON t.customer_id = c.customer_id
+    JOIN transaction_records tr ON tr.transaction_id = t.transaction_id
+    JOIN inventory i ON i.inventory_id = tr.inventory_id
+    JOIN products p ON p.product_id = i.product_id
+    JOIN categories ct ON ct.category_id = p.category_id
+    JOIN (SELECT c2.customer_id, SUM(p2.price * tr2.item_quantity) AS total_spent
+          FROM customers c2
+          JOIN transactions t2 ON t2.customer_id = c2.customer_id
+          JOIN transaction_records tr2 ON tr2.transaction_id = t2.transaction_id
+          JOIN inventory i2 ON i2.inventory_id = tr2.inventory_id
+          JOIN products p2 ON p2.product_id = i2.product_id
+          JOIN categories ct2 ON ct2.category_id = p2.category_id
+          GROUP BY c2.customer_id
+          ORDER BY total_spent DESC
+          LIMIT 3) AS top_spenders ON top_spenders.customer_id = c.customer_id
+GROUP BY c.customer_id, ct.category_name
+ORDER BY c.customer_id, category_spent DESC;` },
+            11: { title: "Query 11: Unused Tables (30 Days)", description: "List all tables that had no reservations in the last 30 days", author: "Luka", technique: "NOT IN subquery for exclusion filtering", challenging: false, code: `SELECT t.table_id as table_number, t.store_id as store_number
+FROM tables t
+WHERE t.table_id NOT IN(SELECT tr.table_id
+        FROM table_reservations tr
+        WHERE tr.reservation_start >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND CURDATE());` },
+            12: { title: "Query 12: Category Product Counts", description: "Which category (or combination of categories) appears most often? Show all of them, ordered by number of products", author: "Czanel", technique: "Simple GROUP BY with COUNT aggregation", challenging: false, code: `SELECT c.category_name, COUNT(p.product_id) AS number_of_products
+FROM categories c
+JOIN products p ON c.category_id = p.category_id
+GROUP BY c.category_name
+ORDER BY number_of_products DESC;` },
+            13: { title: "Query 13: Board Game Night - Table Search", description: "Find tables for 5 friends to play 'Betrayal at House on the Hill' tomorrow with drink holders", author: "Sebastian", technique: "⚡ CHALLENGING: View creation + nested subquery with playtime", challenging: true, code: `-- Check whether we have the game in stock
+SELECT p.product_name, COUNT(*)
+FROM inventory i
+JOIN products p on p.product_id = i.product_id
+WHERE p.product_name = "Betrayal at House on the Hill"
+
+-- create view for easy access to table information
+CREATE OR REPLACE VIEW open_tables AS
+SELECT t.table_id,
+    -- transpose feature_name and value_numerical into columns for each feature_name
+    MAX(CASE WHEN f.feature_name = "Capacity" THEN tf.value_numerical END) AS Capacity,
+    MAX(CASE WHEN f.feature_name = "Cupholder" THEN tf.value_numerical END) AS Cupholders,
+    MAX(CASE WHEN f.feature_name = "Number of Screens" THEN tf.value_numerical END) AS \`Num Screens\`
+FROM tables t
+    LEFT JOIN table_features tf ON tf.table_id = t.table_id
+    LEFT JOIN features f ON f.feature_id = tf.feature_id
+GROUP BY t.table_id;
+
+SELECT table_id, \`Capacity\`
+FROM open_tables
+WHERE \`Capacity\` >= 5 AND \`Cupholders\` > 0
+    -- Disclude tables that are booked at that starting time to the end of the game time
+    AND table_id NOT IN(SELECT tr.table_id
+        FROM table_reservations tr
+        WHERE '2026-04-01 14:00:00' < tr.reservation_end
+            AND DATE_ADD( '2026-04-01 14:00:00', INTERVAL( SELECT pa.value_numerical FROM products p
+                JOIN product_attributes pa ON p.product_id = pa.product_id
+                JOIN attributes a ON pa.attribute_id = a.attribute_id
+                WHERE p.product_name = 'Betrayal at House on the Hill'
+                AND a.attribute_name = 'Average Playtime (Min)') MINUTE) > tr.reservation_start);` }
         };
 
         function openModal(queryNum) {
