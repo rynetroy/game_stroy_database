@@ -164,10 +164,53 @@
         .erd-image:hover { transform: scale(1.02); box-shadow: 0 0 40px var(--accent-glow); }
         .erd-image img { width: 100%; height: auto; display: block; }
         .erd-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .stat-card { background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, var(--dark-navy) 100%); padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); transition: all 0.3s; }
+        .stat-card { background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, var(--dark-navy) 100%); padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); transition: all 0.3s; cursor: pointer; }
         .stat-card:hover { box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-5px); }
         .stat-card .number { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
         .stat-card .label { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; }
+        .stat-card .expand-hint { font-size: 0.75rem; color: var(--accent); margin-top: 0.5rem; opacity: 0.7; }
+        .stat-card .expand-hint::after { content: ' ▼'; }
+        .stat-card.expanded .expand-hint::after { content: ' ▲'; }
+        
+        /* Expandable Details */
+        .stat-details { 
+            display: none; margin-top: 1.5rem; text-align: left; 
+            background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 1rem;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+        }
+        .stat-card.expanded .stat-details { display: block; }
+        .stat-details ul { list-style: none; padding: 0; margin: 0; }
+        .stat-details li { 
+            padding: 0.5rem 0; border-bottom: 1px solid rgba(0, 212, 255, 0.1); 
+            color: var(--ice); font-size: 0.85rem; display: flex; align-items: flex-start; gap: 0.5rem;
+        }
+        .stat-details li:last-child { border-bottom: none; }
+        .stat-details li::before { content: '›'; color: var(--accent); font-weight: bold; }
+        .stat-details .detail-title { color: var(--accent); font-weight: 600; }
+        .stat-details .detail-desc { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+        .stat-details h4 { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.75rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+        
+        /* Challenge Box Expandable */
+        .challenge-box { 
+            margin-top: 2rem; padding: 1.5rem; 
+            background: rgba(255, 107, 53, 0.1); border-radius: 12px; 
+            border-left: 4px solid var(--challenging); cursor: pointer; transition: all 0.3s;
+        }
+        .challenge-box:hover { background: rgba(255, 107, 53, 0.15); }
+        .challenge-box .expand-hint { font-size: 0.75rem; color: var(--challenging); margin-left: 0.5rem; opacity: 0.7; }
+        .challenge-box .expand-hint::after { content: ' ▼'; }
+        .challenge-box.expanded .expand-hint::after { content: ' ▲'; }
+        .challenge-details { 
+            display: none; margin-top: 1rem; padding-top: 1rem; 
+            border-top: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        .challenge-box.expanded .challenge-details { display: block; }
+        .challenge-details .challenge-item { 
+            padding: 0.75rem 0; color: var(--ice); font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.15);
+        }
+        .challenge-details .challenge-item:last-child { border-bottom: none; }
+        .challenge-details .challenge-item strong { color: var(--challenging); }
 
         /* Queries Section */
         .queries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
@@ -296,13 +339,80 @@
                 <img src="images/erd.png" alt="ERD Diagram">
             </div>
             <div class="erd-stats">
-                <div class="stat-card"><div class="number">17</div><div class="label">Total Tables</div></div>
-                <div class="stat-card"><div class="number">5</div><div class="label">Core Entities</div></div>
-                <div class="stat-card"><div class="number">3</div><div class="label">Junction Tables</div></div>
+                <div class="stat-card" onclick="this.classList.toggle('expanded')">
+                    <div class="number">17</div>
+                    <div class="label">Total Tables</div>
+                    <div class="expand-hint">Click to view</div>
+                    <div class="stat-details">
+                        <h4>All Database Tables</h4>
+                        <ul>
+                            <li><span class="detail-title">products</span><span class="detail-desc"> — Items for sale</span></li>
+                            <li><span class="detail-title">customers</span><span class="detail-desc"> — Customer info</span></li>
+                            <li><span class="detail-title">transactions</span><span class="detail-desc"> — Purchase records</span></li>
+                            <li><span class="detail-title">tables</span><span class="detail-desc"> — Gaming tables</span></li>
+                            <li><span class="detail-title">reservations</span><span class="detail-desc"> — Table bookings</span></li>
+                            <li><span class="detail-title">product_attributes</span><span class="detail-desc"> — EAV values</span></li>
+                            <li><span class="detail-title">table_features</span><span class="detail-desc"> — Table properties</span></li>
+                            <li><span class="detail-title">table_reservations</span><span class="detail-desc"> — Booking-table links</span></li>
+                            <li><span class="detail-title">inventory</span><span class="detail-desc"> — Stock per store</span></li>
+                            <li><span class="detail-title">employees</span><span class="detail-desc"> — Staff records</span></li>
+                            <li><span class="detail-title">stores</span><span class="detail-desc"> — Store locations</span></li>
+                            <li><span class="detail-title">categories</span><span class="detail-desc"> — Product categories</span></li>
+                            <li><span class="detail-title">attributes</span><span class="detail-desc"> — Attribute definitions</span></li>
+                            <li><span class="detail-title">features</span><span class="detail-desc"> — Feature definitions</span></li>
+                            <li><span class="detail-title">pricing_rules</span><span class="detail-desc"> — Peak hour pricing</span></li>
+                            <li><span class="detail-title">store_hours</span><span class="detail-desc"> — Operating hours</span></li>
+                            <li><span class="detail-title">transaction_records</span><span class="detail-desc"> — Line items</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="this.classList.toggle('expanded')">
+                    <div class="number">5</div>
+                    <div class="label">Core Entities</div>
+                    <div class="expand-hint">Click to view</div>
+                    <div class="stat-details">
+                        <h4>Primary Business Entities</h4>
+                        <ul>
+                            <li><span class="detail-title">products</span><div class="detail-desc">Items sold in store — miniatures, dice, board games, rulebooks, and accessories. Links to categories and attributes via EAV pattern.</div></li>
+                            <li><span class="detail-title">customers</span><div class="detail-desc">People who make purchases and reservations. Central to both retail and service sides of the business.</div></li>
+                            <li><span class="detail-title">transactions</span><div class="detail-desc">Sales records linking customers to their purchases. Contains totals, dates, and employee who processed the sale.</div></li>
+                            <li><span class="detail-title">tables</span><div class="detail-desc">Gaming tables available for rental. Each has hourly pricing and links to features like capacity, screens, and cupholders.</div></li>
+                            <li><span class="detail-title">reservations</span><div class="detail-desc">Bookings made by customers for table space. Tracks date/time, guest count, and links to specific tables.</div></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="this.classList.toggle('expanded')">
+                    <div class="number">3</div>
+                    <div class="label">Junction Tables</div>
+                    <div class="expand-hint">Click to view</div>
+                    <div class="stat-details">
+                        <h4>Many-to-Many Relationships</h4>
+                        <ul>
+                            <li><span class="detail-title">product_attributes</span><div class="detail-desc">Links products to their attributes using EAV pattern. Allows flexible properties (scale, material, piece count) without schema changes when adding new product types.</div></li>
+                            <li><span class="detail-title">table_features</span><div class="detail-desc">Links tables to their features (capacity, cupholders, screens). Also uses EAV-style design for flexibility in tracking different table amenities.</div></li>
+                            <li><span class="detail-title">table_reservations</span><div class="detail-desc">Links reservations to specific tables. Allows one reservation to book multiple tables and tracks the exact time slots for each table.</div></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 107, 53, 0.1); border-radius: 12px; border-left: 4px solid var(--challenging);">
-                <strong style="color: var(--challenging);">⚡ Key Challenge:</strong>
+            <div class="challenge-box" onclick="this.classList.toggle('expanded')">
+                <strong style="color: var(--challenging);">⚡ Key Challenges:</strong>
                 <span style="color: var(--ice);"> The EAV pattern for product_attributes required self-joins to filter by multiple attributes simultaneously</span>
+                <span class="expand-hint">Click for more</span>
+                <div class="challenge-details">
+                    <div class="challenge-item">
+                        <strong>1. EAV Self-Join Complexity:</strong> Finding products with multiple attributes (e.g., 32mm scale AND metal material) requires joining the product_attributes table to itself — once for each attribute being filtered. This makes queries more complex but allows unlimited flexibility in product properties.
+                    </div>
+                    <div class="challenge-item">
+                        <strong>2. Multi-Model Business Logic:</strong> The database serves both retail (product sales) and service (table rentals) — two parallel paths from customers requiring different validation rules, pricing calculations, and availability checks.
+                    </div>
+                    <div class="challenge-item">
+                        <strong>3. Time-Based Overlap Detection:</strong> Table availability queries must detect overlapping reservations using datetime range comparisons, complicated further by peak pricing rules that vary by day of week and time of day.
+                    </div>
+                    <div class="challenge-item">
+                        <strong>4. Dynamic Pricing Calculations:</strong> Computing reservation costs requires calculating what portion of a booking falls within peak hours, applying different rate modifiers, and summing across multiple tables in a single reservation.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -341,8 +451,8 @@
     </section>
 
     <footer>
-        <p><span>DROP IF Orphan</span> | Game Store Database | Capstone Project | DSML Term 2 | April 2026</p>
-        <p style="margin-top: 1rem; font-size: 0.85rem;">RRC Polytech | COMP-1701 Transforming Data Into Databases | Alex Gilmer</p>
+        <p><span>DROP IF Orphan</span> | Game Store Database | Capstone Project | April 2026</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">COMP-1701 (277852) Transforming Data Into Databases | Alex Gilmer</p>
     </footer>
 
     <!-- Code Modal -->
